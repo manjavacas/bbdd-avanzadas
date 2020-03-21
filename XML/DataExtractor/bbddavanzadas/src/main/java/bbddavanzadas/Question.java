@@ -1,4 +1,3 @@
-
 package bbddavanzadas;
 
 public class Question {
@@ -62,8 +61,8 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question [cat=" + cat + ", date=" + date + ", maincat=" + maincat + ", subject=" + subject + ", uri="
-                + uri + "]\n";
+        return "{ \"question\": { \"cat\" : \"" + cat + "\", \"date\" : \"" + date + "\", \"maincat\" : \"" + maincat
+                + "\", \"subject\" : \"" + subject + "\", \"uri\" : \"" + uri + "\"} }\n";
     }
 
 }
