@@ -1,22 +1,28 @@
 package bbddavanzadas;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class Question {
 
     private String uri;
     private String subject;
     private String cat;
     private String maincat;
-    private String date;
+    private LocalDate date;
 
     public Question() {
     }
 
-    public Question(String uri, String subject, String cat, String maincat, String date) {
+    public Question(String uri, String subject, String cat, String maincat, String timestamp) {
         this.uri = uri;
         this.subject = subject;
         this.cat = cat;
         this.maincat = maincat;
-        this.date = date;
+
+        Date d = new Date(Long.parseLong(timestamp) * 1000);
+        this.date = d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     public String getUri() {
@@ -51,12 +57,13 @@ public class Question {
         this.maincat = maincat;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(String timestamp) {
+        Date d = new Date(Long.parseLong(timestamp) * 1000);
+        this.date = d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @Override

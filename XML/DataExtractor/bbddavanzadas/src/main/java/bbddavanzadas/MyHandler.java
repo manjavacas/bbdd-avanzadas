@@ -6,13 +6,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import org.bson.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
 public class MyHandler extends DefaultHandler {
 
     final static String DESTINATION = "/home/antonio/UCLM/XML/output/";
+    final static String URI = "mongodb+srv://mms:mms123@bdadatawarehouse-qalqb.mongodb.net/test?retryWrites=true&w=majority";
 
     private List<String> categories;
     private Question question;
@@ -79,7 +86,8 @@ public class MyHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("vespaadd")) {
             if (categories.contains(question.getMaincat()))
                 try {
-                    save(question);
+                    // save(question);
+                    saveFile(question);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -91,7 +99,7 @@ public class MyHandler extends DefaultHandler {
         data.append(new String(ch, start, length));
     }
 
-    private void save(Question question) throws IOException {
+    private void saveFile(Question question) throws IOException {
 
         String path = DESTINATION + question.getMaincat() + ".txt";
         File file = new File(path);
@@ -106,6 +114,22 @@ public class MyHandler extends DefaultHandler {
 
         out.append(question.toString());
         out.close();
+
+    }
+
+    private void save(Question question) throws IOException {
+
+        MongoClient mongoClient = MongoClients.create(URI);
+        MongoDatabase database = mongoClient.getDatabase("yahoo_answers");
+        MongoCollection<Document> collection = database.getCollection(question.getMaincat());
+
+        Document doc = new Document("uri", question.getUri()).append("subject", question.getSubject())
+                .append("cat", question.getCat()).append("maincat", question.getMaincat())
+                .append("date", question.getDate()).append("weekday", question.getDate().getDayOfWeek().toString())
+                .append("month", question.getDate().getMonthValue()).append("year", question.getDate().getYear());
+
+        collection.insertOne(doc);
+        mongoClient.close();
 
     }
 
