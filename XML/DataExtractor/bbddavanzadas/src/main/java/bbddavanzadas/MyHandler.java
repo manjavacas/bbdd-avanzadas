@@ -18,7 +18,7 @@ import com.mongodb.client.MongoDatabase;
 
 public class MyHandler extends DefaultHandler {
 
-    final static String DESTINATION = "/home/antonio/UCLM/XML/output/";
+    final static String DESTINATION = "/home/antonio/UCLM/XMLdata/output/";
     final static String URI = "mongodb+srv://mms:mms123@bdadatawarehouse-qalqb.mongodb.net/test?retryWrites=true&w=majority";
 
     private List<String> categories;

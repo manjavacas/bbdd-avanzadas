@@ -12,7 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ExtractData {
 
-    final static String ROUTE = "/home/antonio/UCLM/XML/data/FullOct2007.xml";
+    final static String ROUTE = "/home/antonio/UCLM/XMLdata/input/FullOct2007.xml";
     
     final static String[] CATEGORIES = { "Travel", "Beauty & Style", "Society & Culture", "Computers & Internet",
             "Cars & Transportation", "Food & Drink" };
